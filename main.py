@@ -1,28 +1,57 @@
-from PIL import	Image
+from PIL import Image
 
-base_xml = open('image.rbxmx', encoding='utf-8', errors='ignore').read()
+TEMPLATE_FILE = 'image.rbxmx'
+OUTPUT_FILE = 'new_image.rbxmx'
+IMAGE_FILE = 'test.jpg'
 
-image = Image.open('test.jpg')
-image = image.resize((128, 96))
+def load_template(path):
+    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+        return f.read()
 
-pixels = image.load()
+def load_image(path, size=(128, 96)):
+    img = Image.open(path).convert('RGB')
+    return img.resize(size)
 
-width, height = image.size
-image_data = 'local image = {'
+def rgb_to_str(rgb):
+    return f"{rgb[0]},{rgb[1]},{rgb[2]}"
 
-for y in range(height):
-	row = f"    [{y}] = '"
+def build_image_data(image):
+    pixels = image.load()
+    width, height = image.size
 
-	for x in range(width):
-		row = row + f'<stroke color="rgb{str(pixels[x, y])}"><font color="rgb{str(pixels[x, y])}">□</font></stroke>'
+    lines = ["local image = {"]
 
-	row = row + "',"
+    for y in range(height):
+        row = ['    [{}] = "'.format(y)]
 
-	image_data = image_data + '\n' + row
+        for x in range(width):
+            r, g, b = pixels[x, y]
+            color = f'rgb({r},{g},{b})'
 
-image_data = image_data + '\n}'
-image_data = image_data + '\n\nreturn image'
+            row.append(
+                f'<stroke color="{color}">'
+                f'<font color="{color}">□</font></stroke>'
+            )
 
-base_xml = base_xml.replace('___', image_data)
+        row.append('",')
+        lines.append(''.join(row))
 
-open('new_image.rbxmx', 'w', encoding='utf-8').write(base_xml)
+    lines.append("}\n\nreturn image")
+
+    return '\n'.join(lines)
+
+def main():
+    base_xml = load_template(TEMPLATE_FILE)
+    image = load_image(IMAGE_FILE)
+
+    image_data = build_image_data(image)
+
+    result = base_xml.replace('___', image_data)
+
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        f.write(result)
+
+    print("Done:", OUTPUT_FILE)
+
+if __name__ == "__main__":
+    main()

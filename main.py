@@ -35,6 +35,7 @@ def main(): # main function
     parser.add_argument("input", help="Input image file")
     parser.add_argument("-o", "--output", default="output.rbxmx", help="Output file")
     parser.add_argument("-w", "--width", type=int, default=128)
+    parser.add_argument("-H", "--height", type=int, default=96)
     args = parser.parse_args()
 
     image = load_image(args.input, (args.width, args.height))

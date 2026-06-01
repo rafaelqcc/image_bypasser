@@ -7,7 +7,9 @@ python3 main.py [filename]
 # Output
 The script generates a .rbxmx file that can be imported into Roblox Studio.
 For better performance, you can convert it using:
-    https://github.com/lune-org/lune/
+
+https://github.com/lune-org/lune/
+
 This helps transform the output into .rbxm for faster loading in Roblox Studio.
 
 # Example of use

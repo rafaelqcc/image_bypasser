@@ -21,4 +21,4 @@ python3 main.py image.png
 ![alt text](https://github.com/rafaelqcc/image_bypasser/blob/main/image.png?raw=true)
 
 # Note
-for educational purposes only So don't use it to create the wrong things.
+For educational purposes only; do not use to circumvent the Terms of Service.

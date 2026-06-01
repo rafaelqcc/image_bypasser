@@ -1,17 +1,22 @@
 # Image bypasser
-bypasses roblox moderation by converting an image to pixels using RichText
+bypasses Roblox moderation by converting an image to pixels using RichText
 
 # Usage
 python3 main.py [filename]
 
-And then you can import it using Roblox Studio, I recommend using the https://github.com/lune-org/lune/ To convert the output file to .rbxm so Roblox Studio loads the file faster.
+# Output
+The script generates a .rbxmx file that can be imported into Roblox Studio.
+For better performance, you can convert it using:
+    https://github.com/lune-org/lune/
+This helps transform the output into .rbxm for faster loading in Roblox Studio.
 
 # Example of use
 ``` bash
 python3 main.py image.png
 ```
 
+# Example
 ![alt text](https://github.com/rafaelqcc/image_bypasser/blob/main/image.png?raw=true)
 
-# note
+# Note
 for educational purposes only So don't use it to create the wrong things.

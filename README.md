@@ -1,4 +1,4 @@
-# image bypasser
+# image bypasser or image-to-text renderer
 bypasses roblox moderation by converting an image to pixels using richtext
 
 # usage

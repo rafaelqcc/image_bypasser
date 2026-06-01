@@ -29,22 +29,26 @@ def build_image_data(image):
     return '\n'.join(lines)
 
 # now CLI
-def main(): # main function
-    parser = argparse.ArgumentParser(description="Image to Roblox RichText converter")
-    
-    parser.add_argument("input", help="Input image file")
-    parser.add_argument("-o", "--output", default="output.rbxmx", help="Output file")
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input")
+    parser.add_argument("-o", "--output", default="output.rbxmx")
     parser.add_argument("-w", "--width", type=int, default=128)
     parser.add_argument("-H", "--height", type=int, default=96)
+
     args = parser.parse_args()
 
+    base_xml = open("image.rbxmx", "r", encoding="utf-8").read()
+
     image = load_image(args.input, (args.width, args.height))
-    result = build_image_data(image)
+    image_data = build_image_data(image)
+
+    result = base_xml.replace("___", image_data)
 
     with open(args.output, "w", encoding="utf-8") as f:
         f.write(result)
 
-    print(f"Done: {args.output}")
+    print("Done:", args.output)
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 import argparse
-from PIL import Image
+from PIL import Image # Pillow
 
 def load_image(path, size):
     img = Image.open(path).convert('RGB')
@@ -28,6 +28,7 @@ def build_image_data(image):
     lines.append("}\n\nreturn image")
     return '\n'.join(lines)
 
+# now CLI
 def main():
     parser = argparse.ArgumentParser(description="Image to Roblox RichText converter")
     

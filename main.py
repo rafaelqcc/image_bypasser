@@ -1,5 +1,5 @@
 import argparse
-from PIL import Image # Pillow
+from PIL import Image  # Pillow
 
 def load_image(path, size):
     img = Image.open(path).convert('RGB')
@@ -12,21 +12,19 @@ def build_image_data(image):
     lines = ["local image = {"]
 
     for y in range(height):
-        row = [f'    [{y}] = "']
+        row = [f"    [{y + 1}] = {{" ]
 
         for x in range(width):
             r, g, b = pixels[x, y]
 
-            row.append(
-                f'<font color=\\"rgb({r},{g},{b})\\">□</font>'
-            )
+            row.append(f"{{{r},{g},{b}}},")
 
-        row.append('",')
-        lines.append(''.join(row))
+        row.append("},")
+        lines.append("".join(row))
 
     lines.append("}\n\nreturn image")
-    return '\n'.join(lines)
-# now CLI
+    return "\n".join(lines)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
@@ -40,9 +38,8 @@ def main():
 
     image = load_image(args.input, (args.width, args.height))
     image_data = build_image_data(image)
-    image_data_wrapped = f"<![CDATA[\n{image_data}\n]]>"
 
-    result = base_xml.replace("___", image_data_wrapped)
+    result = base_xml.replace("___", image_data)
 
     with open(args.output, "w", encoding="utf-8") as f:
         f.write(result)

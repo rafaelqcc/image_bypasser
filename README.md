@@ -4,9 +4,9 @@ bypasses roblox moderation by converting an image to pixels using RichText
 # usage
 python3 main.py [filename]
 
-then u can import from file in roblox studio
+And then you can import it using Roblox Studio, I recommend using the https://github.com/lune-org/lune/ To convert the output file to .rbxm so Roblox Studio loads the file faster.
 
-# example
+# Example of use
 python3 main.py image.png
 ![alt text](https://github.com/rafaelqcc/image_bypasser/blob/main/image.png?raw=true)
 

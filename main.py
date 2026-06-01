@@ -9,21 +9,22 @@ def build_image_data(image):
     pixels = image.load()
     width, height = image.size
 
+    font_template = '<font color="rgb({},{},{})">□</font>'
+
     lines = ["local image = {"]
 
     for y in range(height):
-        row = [f'    [{y}] = "']
+        row = ['    [{}] = "'.format(y)]
+
+        append = row.append
+        join = ''.join
 
         for x in range(width):
             r, g, b = pixels[x, y]
-            color = f'rgb({r},{g},{b})'
+            append(font_template.format(r, g, b))
 
-            row.append(
-                f'<font color="{color}">□</font>'
-            )
-
-        row.append('",')
-        lines.append(''.join(row))
+        append('",')
+        lines.append(join(row))
 
     lines.append("}\n\nreturn image")
     return '\n'.join(lines)

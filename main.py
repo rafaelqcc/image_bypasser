@@ -29,7 +29,7 @@ def build_image_data(image):
     return '\n'.join(lines)
 
 # now CLI
-def main():
+def main(): # main function
     parser = argparse.ArgumentParser(description="Image to Roblox RichText converter")
     
     parser.add_argument("input", help="Input image file")

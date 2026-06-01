@@ -8,4 +8,4 @@ then u can import from file in roblox studio
 
 # example
 python3 main.py image.png
-![alt text](https://github.com/3xq/image_bypasser/blob/main/image.png?raw=true)
+![alt text](https://github.com/rafaelqcc/image_bypasser/blob/main/image.png?raw=true)

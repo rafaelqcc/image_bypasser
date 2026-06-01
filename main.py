@@ -9,26 +9,23 @@ def build_image_data(image):
     pixels = image.load()
     width, height = image.size
 
-    font_template = '<font color="rgb({},{},{})">□</font>'
-
     lines = ["local image = {"]
 
     for y in range(height):
-        row = ['    [{}] = "'.format(y)]
-
-        append = row.append
-        join = ''.join
+        row = [f'    [{y}] = "']
 
         for x in range(width):
             r, g, b = pixels[x, y]
-            append(font_template.format(r, g, b))
 
-        append('",')
-        lines.append(join(row))
+            row.append(
+                f'<font color=\\"rgb({r},{g},{b})\\">□</font>'
+            )
+
+        row.append('",')
+        lines.append(''.join(row))
 
     lines.append("}\n\nreturn image")
     return '\n'.join(lines)
-
 # now CLI
 def main():
     parser = argparse.ArgumentParser()

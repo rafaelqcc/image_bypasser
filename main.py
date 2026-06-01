@@ -39,6 +39,7 @@ def main():
     base_xml = open("image.rbxmx", "r", encoding="utf-8").read()
 
     image = load_image(args.input, (args.width, args.height))
+    image_data = build_image_data(image)
     image_data_wrapped = f"<![CDATA[\n{image_data}\n]]>"
 
     result = base_xml.replace("___", image_data_wrapped)

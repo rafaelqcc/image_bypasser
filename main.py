@@ -1,19 +1,9 @@
+import argparse
 from PIL import Image
 
-TEMPLATE_FILE = 'image.rbxmx'
-OUTPUT_FILE = 'new_image.rbxmx'
-IMAGE_FILE = 'test.jpg'
-
-def load_template(path):
-    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
-        return f.read()
-
-def load_image(path, size=(128, 96)):
+def load_image(path, size):
     img = Image.open(path).convert('RGB')
     return img.resize(size)
-
-def rgb_to_str(rgb):
-    return f"{rgb[0]},{rgb[1]},{rgb[2]}"
 
 def build_image_data(image):
     pixels = image.load()
@@ -22,36 +12,39 @@ def build_image_data(image):
     lines = ["local image = {"]
 
     for y in range(height):
-        row = ['    [{}] = "'.format(y)]
+        row = [f'    [{y}] = "']
 
         for x in range(width):
             r, g, b = pixels[x, y]
             color = f'rgb({r},{g},{b})'
 
             row.append(
-                f'<stroke color="{color}">'
-                f'<font color="{color}">□</font></stroke>'
+                f'<font color="{color}">□</font>'
             )
 
         row.append('",')
         lines.append(''.join(row))
 
     lines.append("}\n\nreturn image")
-
     return '\n'.join(lines)
 
 def main():
-    base_xml = load_template(TEMPLATE_FILE)
-    image = load_image(IMAGE_FILE)
+    parser = argparse.ArgumentParser(description="Image to Roblox RichText converter")
+    
+    parser.add_argument("input", help="Input image file")
+    parser.add_argument("-o", "--output", default="output.rbxmx", help="Output file")
+    parser.add_argument("-w", "--width", type=int, default=128)
+    parser.add_argument("-h", "--height", type=int, default=96)
 
-    image_data = build_image_data(image)
+    args = parser.parse_args()
 
-    result = base_xml.replace('___', image_data)
+    image = load_image(args.input, (args.width, args.height))
+    result = build_image_data(image)
 
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+    with open(args.output, "w", encoding="utf-8") as f:
         f.write(result)
 
-    print("Done:", OUTPUT_FILE)
+    print(f"Done: {args.output}")
 
 if __name__ == "__main__":
     main()

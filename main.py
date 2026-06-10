@@ -28,12 +28,13 @@ def build_image_data(image):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
+    # Args
     parser.add_argument("-o", "--output", default="output.rbxmx")
     parser.add_argument("-w", "--width", type=int, default=128)
     parser.add_argument("-H", "--height", type=int, default=96)
 
     args = parser.parse_args()
-
+    # Read the xml
     base_xml = open("image.rbxmx", "r", encoding="utf-8").read()
 
     image = load_image(args.input, (args.width, args.height))

@@ -9,7 +9,10 @@ def build_image_data(image):
     pixels = image.load()
     width, height = image.size
 
-    lines = ["local image = {"]
+    lines = [
+        "-- Generated image data (no alpha channel, RGB only)",
+        "local image = {"
+    ]
 
     for y in range(height):
         row = [f"    [{y + 1}] = {{" ]
